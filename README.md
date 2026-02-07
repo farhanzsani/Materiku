@@ -67,15 +67,7 @@ Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukun
    http://localhost:3000
    ```
 
-## 🔑 Default Login
 
-Setelah menjalankan seed, gunakan kredensial berikut:
-
-| Username | Password |
-|----------|----------|
-| `admin`  | `admin123` |
-
-> ⚠️ **Penting:** Ganti password default sebelum deploy ke production!
 
 ## 📁 Struktur Proyek
 
@@ -184,9 +176,6 @@ Kontribusi sangat diterima! Silakan buat pull request atau buka issue untuk disk
 4. Push ke branch (`git push origin fitur-baru`)
 5. Buat Pull Request
 
-## 📄 Lisensi
-
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
