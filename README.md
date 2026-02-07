@@ -1,75 +1,201 @@
-# Nuxt Minimal Starter
+# 📚 MateriKu
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukungan Markdown. Dibangun dengan teknologi modern untuk pengalaman pengguna yang optimal.
 
-## Setup
+![Nuxt](https://img.shields.io/badge/Nuxt-4.x-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-Make sure to install dependencies:
+## ✨ Fitur
 
-```bash
-# npm
-npm install
+- 📝 **Markdown Editor** - Tulis materi dengan sintaks Markdown dan preview real-time
+- 🔍 **Pencarian** - Cari materi dengan cepat berdasarkan judul
+- 🌙 **Dark Mode** - Tampilan gelap yang nyaman untuk mata
+- 🔐 **Autentikasi Admin** - Sistem login untuk mengelola materi
+- 📱 **Responsif** - Tampilan optimal di berbagai ukuran layar
 
-# pnpm
-pnpm install
+## 🛠️ Tech Stack
 
-# yarn
-yarn install
+| Teknologi | Deskripsi |
+|-----------|-----------|
+| [Nuxt 4](https://nuxt.com/) | Framework Vue.js untuk full-stack web apps |
+| [Vue 3](https://vuejs.org/) | JavaScript framework untuk UI |
+| [Prisma](https://www.prisma.io/) | Next-generation ORM untuk database |
+| [SQLite](https://www.sqlite.org/) | Database ringan dan portabel |
+| [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS framework |
+| [Marked](https://marked.js.org/) | Markdown parser dan compiler |
 
-# bun
-bun install
+## 📦 Instalasi
+
+### Prasyarat
+
+- Node.js 18+ 
+- npm atau yarn
+
+### Langkah-langkah
+
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/farhanzsani/Materiku.git
+   cd Materiku
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup database**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+4. **Seed data awal (opsional)**
+   ```bash
+   npx prisma db seed
+   ```
+
+5. **Jalankan development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Buka di browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 🔑 Default Login
+
+Setelah menjalankan seed, gunakan kredensial berikut:
+
+| Username | Password |
+|----------|----------|
+| `admin`  | `admin123` |
+
+> ⚠️ **Penting:** Ganti password default sebelum deploy ke production!
+
+## 📁 Struktur Proyek
+
+```
+materiku/
+├── app/
+│   ├── pages/              # Halaman aplikasi
+│   │   ├── index.vue       # Halaman utama (daftar materi)
+│   │   ├── login.vue       # Halaman login admin
+│   │   ├── materi/
+│   │   │   └── [slug].vue  # Halaman detail materi
+│   │   └── admin/
+│   │       ├── tambah.vue  # Halaman tambah materi
+│   │       └── edit/
+│   │           └── [id].vue # Halaman edit materi
+│   ├── middleware/         # Route middleware
+│   └── assets/             # CSS dan assets
+├── server/
+│   └── api/                # API endpoints
+│       ├── auth/           # Autentikasi (login, logout, me)
+│       ├── materi/         # CRUD materi
+│       └── login.post.ts   # Login handler
+├── prisma/
+│   ├── schema.prisma       # Database schema
+│   └── seed.ts             # Database seeder
+└── public/                 # Static files
 ```
 
-## Development Server
+## 🔌 API Endpoints
 
-Start the development server on `http://localhost:3000`:
+### Autentikasi
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `POST` | `/api/login` | Login admin |
+| `POST` | `/api/auth/logout` | Logout |
+| `GET` | `/api/auth/me` | Cek status autentikasi |
+
+### Materi
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| `GET` | `/api/materi` | Daftar semua materi |
+| `GET` | `/api/materi/:id` | Detail materi (by ID atau slug) |
+| `POST` | `/api/materi/create` | Buat materi baru |
+| `PUT` | `/api/materi/:id` | Update materi |
+| `DELETE` | `/api/materi/:id` | Hapus materi |
+
+## 🚀 Deployment
+
+### Build untuk Production
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+### Preview Production Build
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 📝 Penggunaan
+
+### Membuat Materi Baru
+
+1. Login sebagai admin di `/login`
+2. Klik tombol **"+ Tambah Materi"**
+3. Tulis judul dan konten (mendukung Markdown)
+4. Klik **"Terbitkan"**
+
+### Sintaks Markdown yang Didukung
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+
+**Teks tebal** dan *teks miring*
+
+- Item list
+- Item lainnya
+
+1. Numbered list
+2. Item kedua
+
+`inline code`
+
+\`\`\`javascript
+// Code block
+console.log('Hello World!')
+\`\`\`
+
+> Blockquote
+
+[Link](https://example.com)
+```
+
+## 🤝 Kontribusi
+
+Kontribusi sangat diterima! Silakan buat pull request atau buka issue untuk diskusi.
+
+1. Fork repository
+2. Buat branch fitur (`git checkout -b fitur-baru`)
+3. Commit perubahan (`git commit -m 'Menambah fitur baru'`)
+4. Push ke branch (`git push origin fitur-baru`)
+5. Buat Pull Request
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+## 👨‍💻 Author
+
+**Farhan Zsani**
+
+- GitHub: [@farhanzsani](https://github.com/farhanzsani)
+
+---
+
+<p align="center">
+  Made with ❤️ by <a href="https://github.com/farhanzsani">farhanzsani</a>
+</p>
