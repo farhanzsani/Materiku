@@ -6,6 +6,7 @@ Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukun
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
 ## ✨ Fitur
 
@@ -22,7 +23,8 @@ Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukun
 | [Nuxt 4](https://nuxt.com/) | Framework Vue.js untuk full-stack web apps |
 | [Vue 3](https://vuejs.org/) | JavaScript framework untuk UI |
 | [Prisma](https://www.prisma.io/) | Next-generation ORM untuk database |
-| [SQLite](https://www.sqlite.org/) | Database ringan dan portabel |
+| [PostgreSQL](https://www.postgresql.org/) | Database relasional yang powerful |
+| [Supabase](https://supabase.com/) | Backend-as-a-Service dengan PostgreSQL |
 | [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS framework |
 | [Marked](https://marked.js.org/) | Markdown parser dan compiler |
 
@@ -32,6 +34,7 @@ Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukun
 
 - Node.js 18+ 
 - npm atau yarn
+- Akun [Supabase](https://supabase.com/) (gratis)
 
 ### Langkah-langkah
 
@@ -46,23 +49,33 @@ Platform pembelajaran berbasis web untuk membuat dan berbagi materi dengan dukun
    npm install
    ```
 
-3. **Setup database**
+3. **Setup environment variables**
+   
+   Buat file `.env` di root project dan isi dengan:
+   ```env
+   DATABASE_URL="postgresql://[user]:[password]@[host]:[port]/[database]?pgbouncer=true"
+   DIRECT_URL="postgresql://[user]:[password]@[host]:[port]/[database]"
+   ```
+   
+   > Dapatkan URL ini dari dashboard Supabase: **Settings > Database > Connection string**
+
+4. **Setup database**
    ```bash
    npx prisma generate
    npx prisma db push
    ```
 
-4. **Seed data awal (opsional)**
+5. **Seed data awal (opsional)**
    ```bash
    npx prisma db seed
    ```
 
-5. **Jalankan development server**
+6. **Jalankan development server**
    ```bash
    npm run dev
    ```
 
-6. **Buka di browser**
+7. **Buka di browser**
    ```
    http://localhost:3000
    ```
