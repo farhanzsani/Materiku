@@ -54,6 +54,7 @@
 <script setup>
 import { marked } from 'marked'
 
+const toast = useToast()
 const route = useRoute()
 const slug = route.params.slug
 
@@ -77,10 +78,10 @@ const handleDelete = async () => {
   if (confirm('Yakin mau hapus materi ini?')) {
     try {
       await $fetch(`/api/materi/${materi.value.id}`, { method: 'DELETE' })
-      alert('Materi berhasil dihapus!')
+      toast.success('Materi berhasil dihapus!')
       navigateTo('/')
     } catch (e) {
-      alert('Gagal menghapus materi')
+      toast.error('Gagal menghapus materi')
     }
   }
 }

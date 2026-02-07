@@ -32,6 +32,8 @@
 <script setup>
 import { marked } from 'marked'
 
+const toast = useToast()
+
 definePageMeta({
   middleware: 'auth'
 })
@@ -61,7 +63,7 @@ const renderMarkdown = computed(() => marked(content.value || ''))
 // Handler update
 const updateMateri = async () => {
   if (!title.value.trim()) {
-    alert('Judul tidak boleh kosong!')
+    toast.warning('Judul tidak boleh kosong!')
     return
   }
 
@@ -74,10 +76,10 @@ const updateMateri = async () => {
         content: content.value 
       }
     })
-    alert('Materi berhasil diupdate!')
+    toast.success('Materi berhasil diupdate!')
     navigateTo('/')
   } catch (e) {
-    alert('Gagal mengupdate materi')
+    toast.error('Gagal mengupdate materi')
   } finally {
     loading.value = false
   }

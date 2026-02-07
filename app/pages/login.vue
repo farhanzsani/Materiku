@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+const toast = useToast()
 const form = ref({ username: '', password: '' })
 const loading = ref(false)
 
@@ -30,10 +31,10 @@ const handleLogin = async () => {
       method: 'POST',
       body: form.value
     })
-    alert('Login Berhasil!')
+    toast.success('Login Berhasil!')
     navigateTo('/')
   } catch (err) {
-    alert('Gagal login: Username/Password salah')
+    toast.error('Gagal login: Username/Password salah')
   } finally {
     loading.value = false
   }

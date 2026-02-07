@@ -16,6 +16,8 @@
 <script setup>
 import { marked } from 'marked'
 
+const toast = useToast()
+
 definePageMeta({
   middleware: 'auth'
 })
@@ -26,15 +28,20 @@ const content = ref('')
 const renderMarkdown = computed(() => marked(content.value || ''))
 
 const simpanMateri = async () => {
+  if (!title.value.trim()) {
+    toast.warning('Judul tidak boleh kosong!')
+    return
+  }
+  
   try {
     await $fetch('/api/materi/create', {
       method: 'POST',
       body: { title: title.value, content: content.value }
     })
-    alert('Materi tersimpan!')
+    toast.success('Materi berhasil diterbitkan!')
     navigateTo('/')
   } catch (e) {
-    alert('Gagal menyimpan materi')
+    toast.error('Gagal menyimpan materi')
   }
 }
 </script>

@@ -12,6 +12,9 @@
           Logout
         </button>
       </div>
+      
+      <!-- Hidden Login Button (looks like a dot) -->
+      <NuxtLink v-else to="/login" class="w-2 h-2 rounded-full bg-gray-700 hover:bg-gray-600 transition" title=""></NuxtLink>
     </div>
 
     <!-- Search Bar -->
@@ -64,6 +67,8 @@
 </template>
 
 <script setup>
+const toast = useToast()
+
 // Ambil data materi dari API
 const { data: materis, refresh } = await useFetch('/api/materi')
 
@@ -89,11 +94,11 @@ const isAdmin = computed(() => authData.value?.authenticated === true)
 const handleLogout = async () => {
   try {
     await $fetch('/api/auth/logout', { method: 'POST' })
-    alert('Logout berhasil!')
+    toast.success('Logout berhasil!')
     await refreshAuth()
     navigateTo('/')
   } catch (e) {
-    alert('Gagal logout')
+    toast.error('Gagal logout')
   }
 }
 
@@ -102,10 +107,10 @@ const confirmDelete = async (id) => {
   if (confirm('Yakin mau hapus materi ini?')) {
     try {
       await $fetch(`/api/materi/${id}`, { method: 'DELETE' })
-      alert('Materi berhasil dihapus!')
+      toast.success('Materi berhasil dihapus!')
       refresh()
     } catch (e) {
-      alert('Gagal menghapus materi')
+      toast.error('Gagal menghapus materi')
     }
   }
 }
