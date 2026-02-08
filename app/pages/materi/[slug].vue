@@ -1,32 +1,32 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     <!-- Header dengan tombol kembali -->
-    <div class="mb-8">
-      <NuxtLink to="/" class="text-blue-400 hover:text-blue-300 hover:underline flex items-center gap-2 mb-4 transition">
+    <div class="mb-6 sm:mb-8">
+      <NuxtLink to="/" class="text-blue-400 hover:text-blue-300 hover:underline flex items-center gap-2 transition text-sm sm:text-base">
         <span>←</span> Kembali ke Daftar Materi
       </NuxtLink>
     </div>
 
     <!-- Loading State -->
-    <div v-if="pending" class="text-center py-20">
-      <p class="text-gray-400 text-xl">Memuat materi...</p>
+    <div v-if="pending" class="text-center py-16 sm:py-20">
+      <p class="text-gray-400 text-lg sm:text-xl">Memuat materi...</p>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-20">
-      <p class="text-red-400 text-xl">{{ error.statusMessage || 'Materi tidak ditemukan' }}</p>
-      <NuxtLink to="/" class="mt-4 inline-block text-blue-400 hover:text-blue-300 hover:underline transition">
+    <div v-else-if="error" class="text-center py-16 sm:py-20">
+      <p class="text-red-400 text-lg sm:text-xl">{{ error.statusMessage || 'Materi tidak ditemukan' }}</p>
+      <NuxtLink to="/" class="mt-4 inline-block text-blue-400 hover:text-blue-300 hover:underline transition text-sm sm:text-base">
         Kembali ke Beranda
       </NuxtLink>
     </div>
 
     <!-- Content -->
-    <article v-else-if="materi" class="bg-gray-800 border border-gray-700 rounded-2xl shadow-lg p-8">
-      <header class="mb-8 pb-6 border-b border-gray-700">
-        <h1 class="text-4xl font-extrabold text-white mb-4">{{ materi.title }}</h1>
-        <div class="flex items-center gap-4 text-gray-400 text-sm">
+    <article v-else-if="materi" class="bg-gray-800 border border-gray-700 rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8">
+      <header class="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-gray-700">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 sm:mb-4">{{ materi.title }}</h1>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-gray-400 text-xs sm:text-sm">
           <span>Oleh: <strong class="text-gray-300">{{ materi.author?.username || 'Admin' }}</strong></span>
-          <span>•</span>
+          <span class="hidden sm:inline">•</span>
           <span>{{ new Date(materi.createdAt).toLocaleDateString('id-ID', { 
             weekday: 'long', 
             year: 'numeric', 
@@ -36,15 +36,15 @@
         </div>
       </header>
 
-      <div class="prose prose-lg prose-invert max-w-none" v-html="renderedContent"></div>
+      <div class="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none" v-html="renderedContent"></div>
     </article>
 
     <!-- Admin Actions -->
-    <div v-if="materi && isAdmin" class="mt-6 flex gap-4">
-      <NuxtLink :to="`/admin/edit/${materi.id}`" class="bg-amber-600 hover:bg-amber-500 text-white px-6 py-2 rounded-lg font-medium transition">
+    <div v-if="materi && isAdmin" class="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+      <NuxtLink :to="`/admin/edit/${materi.id}`" class="bg-amber-600 hover:bg-amber-500 text-white px-4 sm:px-6 py-2 rounded-lg font-medium transition text-center text-sm sm:text-base">
         Edit Materi
       </NuxtLink>
-      <button @click="handleDelete" class="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg font-medium transition">
+      <button @click="handleDelete" class="bg-red-600 hover:bg-red-500 text-white px-4 sm:px-6 py-2 rounded-lg font-medium transition text-sm sm:text-base">
         Hapus Materi
       </button>
     </div>
