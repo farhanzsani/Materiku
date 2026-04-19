@@ -27,16 +27,20 @@
         <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-gray-400 text-xs sm:text-sm">
           <span>Oleh: <strong class="text-gray-300">{{ materi.author?.username || 'Admin' }}</strong></span>
           <span class="hidden sm:inline">•</span>
-          <span>{{ new Date(materi.createdAt).toLocaleDateString('id-ID', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+          <span>{{ new Date(materi.createdat).toLocaleDateString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
           }) }}</span>
         </div>
       </header>
 
-      <div class="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none" v-html="renderedContent"></div>
+      <div
+        class="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none"
+        v-html="renderedContent"
+        @click="handleMateriContentClick"
+      ></div>
     </article>
 
     <!-- Admin Actions -->
@@ -52,22 +56,57 @@
 </template>
 
 <script setup>
-import { marked } from 'marked'
+import { renderMateriMarkdown } from '~/utils/renderMateriMarkdown'
 
 const toast = useToast()
 const route = useRoute()
-const slug = route.params.slug
+const slug = computed(() => {
+  const p = route.params.slug
+  return (Array.isArray(p) ? p[0] : p) ?? ''
+})
 
 // Fetch materi berdasarkan slug
-const { data: materi, pending, error } = await useFetch(`/api/materi/${slug}`)
+const { data: materi, pending, error } = await useFetch(
+  computed(() => `/api/materi/${slug.value}`)
+)
 
-// Render markdown ke HTML
+// Render markdown ke HTML (blok kode: syntax highlight + tombol salin)
 const renderedContent = computed(() => {
   if (materi.value?.content) {
-    return marked(materi.value.content)
+    return renderMateriMarkdown(materi.value.content)
   }
   return ''
 })
+
+function handleMateriContentClick(e) {
+  const target = e.target
+  if (!target || typeof target.closest !== 'function') return
+  const btn = target.closest('[data-copy-code]')
+  if (!btn) return
+  e.preventDefault()
+  const block = btn.closest('.materi-code-block')
+  const pre = block?.querySelector('pre')
+  const text = pre?.innerText ?? ''
+  if (!text.trim()) {
+    toast.error('Tidak ada kode untuk disalin.')
+    return
+  }
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      toast.success('Kode disalin ke clipboard.')
+      const prev = btn.textContent
+      btn.textContent = 'Disalin!'
+      btn.disabled = true
+      window.setTimeout(() => {
+        btn.textContent = prev
+        btn.disabled = false
+      }, 2000)
+    })
+    .catch(() => {
+      toast.error('Gagal menyalin kode.')
+    })
+}
 
 // Cek status admin via API
 const { data: authData } = await useFetch('/api/auth/me')
